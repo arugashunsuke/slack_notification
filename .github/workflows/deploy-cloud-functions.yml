@@ -33,7 +33,7 @@ jobs:
     - name: Deploy Cloud Function
       run: |
         gcloud functions deploy slack-action-handler \
-          --entry-point main \  # エントリポイントを `main` に設定
+          --entry-point main \
           --runtime python310 \
           --trigger-http \
           --allow-unauthenticated \
