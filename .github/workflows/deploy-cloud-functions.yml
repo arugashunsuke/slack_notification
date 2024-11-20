@@ -1,0 +1,40 @@
+name: Deploy to Google Cloud Functions
+
+on:
+  push:
+    branches:
+      - main  # mainブランチへのプッシュでトリガー
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # リポジトリをチェックアウト
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # Google Cloud SDKをセットアップ
+    - name: Setup Google Cloud SDK
+      uses: google-github-actions/setup-gcloud@v1
+      with:
+        version: 'latest'
+        project_id: 'm2m-core'
+        credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+    # 必要なPythonパッケージをインストール
+    - name: Install dependencies
+      run: |
+        python3 -m venv env
+        source env/bin/activate
+        pip install -r requirements.txt
+
+    # Cloud Functionsをデプロイ
+    - name: Deploy Cloud Function
+      run: |
+        gcloud functions deploy slack-action-handler \
+          --entry-point app \
+          --runtime python310 \
+          --trigger-http \
+          --allow-unauthenticated \
+          --region asia-northeast1
