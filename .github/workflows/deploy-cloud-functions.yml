@@ -19,8 +19,8 @@ jobs:
       uses: google-github-actions/setup-gcloud@v1
       with:
         version: 'latest'
-        project_id: 'm2m-core'
-        credentials_json: ${{ secrets.GCP_SA_KEY }}
+        project_id: 'm2m-core'  # Google Cloud プロジェクトID
+        credentials_json: ${{ secrets.GCP_SA_KEY }}  # サービスアカウントキー
 
     # 必要なPythonパッケージをインストール
     - name: Install dependencies
