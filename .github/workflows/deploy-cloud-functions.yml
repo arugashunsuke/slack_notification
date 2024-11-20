@@ -19,8 +19,8 @@ jobs:
       uses: google-github-actions/setup-gcloud@v1
       with:
         version: 'latest'
-        project_id: 'm2m-core'  # Google Cloud プロジェクトID
-        credentials_json: ${{ secrets.GCP_SA_KEY }}  # サービスアカウントキー
+        project_id: 'm2m-core'
+        credentials_json: ${{ secrets.GCP_SA_KEY }}
 
     # 必要なPythonパッケージをインストール
     - name: Install dependencies
@@ -33,7 +33,7 @@ jobs:
     - name: Deploy Cloud Function
       run: |
         gcloud functions deploy slack-action-handler \
-          --entry-point app \
+          --entry-point main \  # エントリポイントを `main` に設定
           --runtime python310 \
           --trigger-http \
           --allow-unauthenticated \

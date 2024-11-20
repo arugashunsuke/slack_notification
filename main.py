@@ -10,7 +10,7 @@ app = Flask(__name__)
 SPREADSHEET_ID = "YOUR_SPREADSHEET_ID"  # スプレッドシートIDを設定
 SHEET_NAME = "SlackActions"  # 対象のシート名
 
-# Google認証情報ファイルのパス（Cloud Functionsの環境変数として設定する）
+# Google認証情報ファイルのパス（環境変数として設定する）
 GOOGLE_CREDENTIALS_JSON = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
 
 # Googleスプレッドシートに接続
@@ -45,5 +45,6 @@ def slack_action_handler():
     # Slackにレスポンスを返す
     return jsonify({"text": f"{user} さんが '{action_value}' を選択しました。データをスプレッドシートに記録しました。"})
 
-if __name__ == "__main__":
-    app.run(debug=True)
+# Cloud Functionsのエントリポイント
+def main(request):
+    return app(request)
