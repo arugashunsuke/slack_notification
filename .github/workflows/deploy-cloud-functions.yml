@@ -20,7 +20,7 @@ jobs:
       with:
         version: 'latest'
         project_id: 'm2m-core'
-        credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+        credentials_json: ${{ secrets.GCP_SA_KEY }}
 
     # 必要なPythonパッケージをインストール
     - name: Install dependencies
